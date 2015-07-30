@@ -1,0 +1,30 @@
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='cosmo' type='css' %}
+
+<a href="/userKeyGen/">back</a>
+{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+<h1><strong>{{ customer.name }}</strong></h1>
+<h4>Active: {{ customer.active }}</h4>
+<h4>Keycodes expire: {{ customer.keycodes_expire }} <a href="/userKeyGen/customer/{{ customer.id }}/renewKeycodes">Renew Keycodes</a></h4>
+<h4>User list: </h4>
+<ul>
+	{% for user in customer.user_set.all %}
+		<li>Username: {{ user.name }}</li>
+		<ul><li>Expiration Date: {{ user.expiration_date }}</li></ul>
+	{% endfor %}
+</ul>
+
+<h4>Bill amount: {{ customer.bill_amount }}</h4>
+<h4>Exchanges: {{ customer.exchanges }}</h4>
+<h4>Due date: {{ customer.due_date }}</h4>
+<h4>Invoice date: {{ customer.invoice_date }}</h4>
+<h4>Paid date: {{ customer.paid_date }}</h4>
+<a href="/userKeyGen/customer/{{ customer.id }}/update/">Update Customer</a>
+<p/>
+<a href="/userKeyGen/customer/{{ customer.id }}/delete/">Delete Customer</a>

@@ -1,0 +1,17 @@
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='cosmo' type='css' %}
+
+<h1>BTS Customers</h1>
+{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+    <ul>
+    {% for customer in customerList %}
+        <li><a href="/userKeyGen/customer/{{ customer.id }}/">{{ customer.name }}</a></li>
+    {% endfor %}
+    </ul>
+<a href="/userKeyGen/customer/create/">Add Customer</a>

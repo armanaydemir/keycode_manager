@@ -1,0 +1,63 @@
+{% load bootstrap_themes %}
+{% bootstrap_styles theme='cosmo' type='css' %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script>
+	$(function() {
+		$( "#id_keycodes_expire" ).datepicker();
+		$( "input[id][name$='date']").datepicker();
+	});
+</script>
+
+<a href="/userKeyGen/">back</a>
+<h1>New Customer</h1>
+<form id="customer_form" action="" method="post">
+	{% csrf_token %}	
+	{% for f in form %}
+		<div id="{{ f.label }}">{{ f.label }}:<br />{{ f }}
+			{% if f.errors %}
+				 {% for v in f.errors %}
+            				<br /><span style="color:red;">{{ v }}</span>
+          			{% endfor %}
+      			{% endif %}
+				
+    		</div>
+ 	{% endfor %}
+	<h2>Add User(s)</h2>
+	<table>
+ 	{% for f2 in inlines %}
+   		<tr id="{{ f2.prefix }}-row-0">
+        		<td>
+           			{{ f2.name.label }}: 
+				<input id="{{ f2.name }}
+			{% if f2.name.errors %}
+				<span style="color:red;">{{ f2.name.errors }}</span>
+			{% endif %}
+        		</td>
+		</tr>
+		<tr id="{{ f2.prefix }}-row-1">
+			<td>
+				{{ f2.expiration_date.label }}: 
+				{{ f2.expiration_date }}
+			{% if f2.expiration_date.errors %}
+				<span style="color:red;">{{ f2.expiration_date.errors }}</span>
+			{% endif %}
+			</td>
+		</tr>
+		<tr id="{{ f2.prefix }}-row-2">
+			<td>
+				{{ f2.DELETE.label }}? 
+				{{ f2.DELETE }}
+			{% if f2.DELETE.errors %}
+				<span style="color:red;">{{ f2.DELETE.errors }}</span>
+			{% endif %}
+			</td>
+   		</tr>
+ 	{% endfor %}
+	</table>
+	{{ form.management_form }}
+	{{ inlines.management_form }}
+	<input type="submit" value="Create Customer / User(s)" />
+</form>

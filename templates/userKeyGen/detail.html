@@ -1,0 +1,7 @@
+<h1>{{ customer.name }}</h1>
+<ul>
+	{% for user in customer.user_set.all %}
+		<li>{{ user.name }}</li>
+		<ul><li>{{ user.expiration_date }}</li></ul>
+	{% endfor %}
+</ul>
